@@ -13,12 +13,14 @@ case object Orange extends Fruit {
 }
 
 object ShoppingCart {
+
   def checkout(fruits: Seq[Fruit] = Seq()): BigDecimal = {
-    if (fruits == null || fruits.isEmpty) 0
-    else {
+    lazy val calculate = {
       val (appleOfferPrice, remainingFruits) = applyAppleOffer(fruits)
       appleOfferPrice + remainingFruits.map(_.price).sum
     }
+
+    if (fruits == null || fruits.isEmpty) 0 else calculate
   }
 
   private def applyAppleOffer(fruits: Seq[Fruit]) = {
