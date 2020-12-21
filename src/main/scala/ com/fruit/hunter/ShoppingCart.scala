@@ -1,6 +1,10 @@
 package com.fruit.hunter
 
-trait Fruit
+sealed trait Fruit
+
+case object Apple extends Fruit
+
+case object Orange extends Fruit
 
 object ShoppingCart {
   def checkout(fruits: Seq[Fruit] = Seq()): BigDecimal = {
