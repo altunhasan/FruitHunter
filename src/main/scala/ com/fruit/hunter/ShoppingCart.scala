@@ -17,7 +17,8 @@ object ShoppingCart {
   def checkout(fruits: Seq[Fruit] = Seq()): BigDecimal = {
     lazy val calculate = {
       val (appleOfferPrice, remainingFruits) = applyAppleOffer(fruits)
-      appleOfferPrice + remainingFruits.map(_.price).sum
+      val (orangeOfferPrice, remainingFruitsNotUnderOffer) = applyOrangeOffer(remainingFruits)
+      appleOfferPrice + orangeOfferPrice + remainingFruitsNotUnderOffer.map(_.price).sum
     }
 
     if (fruits == null || fruits.isEmpty) 0 else calculate
@@ -29,4 +30,12 @@ object ShoppingCart {
     val remainingFruits = List.tabulate(apples.size % 2)(_ => Apple) ::: otherFruits.toList
     offerPrice -> remainingFruits
   }
+
+  private def applyOrangeOffer(fruits: Seq[Fruit]) = {
+    val (oranges, otherFruits) = fruits.partition(_ == Orange)
+    val offerPrice = oranges.size / 3 * Orange.price * 2
+    val remainingFruits = List.tabulate(oranges.size % 3)(_ => Orange) ::: otherFruits.toList
+    offerPrice -> remainingFruits
+  }
+
 }
