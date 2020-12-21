@@ -15,5 +15,11 @@ class ShoppingCartSpec extends Specification with ShoppingCartFixture {
       ShoppingCart.checkout(1 orange) === 0.25
       ShoppingCart.checkout(2.apples and 3.oranges) === 1.95
     }
+
+    "support buy one, get one free on Apples" in {
+      ShoppingCart.checkout(1 apple) === 0.6
+      ShoppingCart.checkout(2 apples) === 0.6
+      ShoppingCart.checkout(3 apples) === 1.2
+    }
   }
 }
