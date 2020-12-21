@@ -2,7 +2,7 @@ package com.fruit.hunter
 
 import org.specs2.mutable.Specification
 
-class ShoppingCartSpec extends Specification {
+class ShoppingCartSpec extends Specification with ShoppingCartFixture {
 
   "Checkout cost" should {
     "be zero for empty basket" in {
@@ -11,9 +11,9 @@ class ShoppingCartSpec extends Specification {
     }
 
     "be 60p for apples and 25p for oranges" in {
-      ShoppingCart.checkout(Seq(Apple)) === 0.6
-      ShoppingCart.checkout(Seq(Orange)) === 0.25
-      ShoppingCart.checkout(Seq(Apple,Apple, Orange, Orange, Orange)) === 1.95
+      ShoppingCart.checkout(1 apple) === 0.6
+      ShoppingCart.checkout(1 orange) === 0.25
+      ShoppingCart.checkout(2.apples and 3.oranges) === 1.95
     }
   }
 }
