@@ -15,7 +15,6 @@ class ShoppingCartSpec extends Specification with ShoppingCartFixture {
       ShoppingCart.checkout(1 apple) === 0.6
       ShoppingCart.checkout(1 orange) === 0.25
       ShoppingCart.checkout(1.apple and 1.orange) === 0.85
-      //      ShoppingCart.checkout(2.apples and 3.oranges) === 1.35 TODO fix mixed offers
     }
 
     "support buy one, get one free on Apples" in {
@@ -27,6 +26,11 @@ class ShoppingCartSpec extends Specification with ShoppingCartFixture {
     "support 3 for the price of 2 on Oranges" in {
       ShoppingCart.checkout(3 oranges) === 0.50
       ShoppingCart.checkout(4 oranges) === 0.75
+    }
+
+    "support multiple offers" in {
+      ShoppingCart.checkout(3.oranges and 2.apples) === 1.1
+      ShoppingCart.checkout(4.oranges and 3.apples) === 1.95
     }
   }
 }
