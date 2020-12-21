@@ -15,6 +15,16 @@ case object Orange extends Fruit {
 object ShoppingCart {
   def checkout(fruits: Seq[Fruit] = Seq()): BigDecimal = {
     if (fruits == null || fruits.isEmpty) 0
-    else fruits.map(_.price).sum
+    else {
+      val (appleOfferPrice, remainingFruits) = applyAppleOffer(fruits)
+      appleOfferPrice + remainingFruits.map(_.price).sum
+    }
+  }
+
+  private def applyAppleOffer(fruits: Seq[Fruit]) = {
+    val (apples, otherFruits) = fruits.partition(_ == Apple)
+    val offerPrice = apples.size / 2 * Apple.price
+    val remainingFruits = List.tabulate(apples.size % 2)(_ => Apple) ::: otherFruits.toList
+    offerPrice -> remainingFruits
   }
 }
